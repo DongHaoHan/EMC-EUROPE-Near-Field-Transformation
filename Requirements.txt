@@ -1,0 +1,4 @@
+Python == 3.12
+Numpy == 1.26.3
+Matplotlib == 3.9.2
+h5py == 3.11.0
