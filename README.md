@@ -1,8 +1,11 @@
 # 1.Introduction
-This repository includes the source code of the paper “Deep Learning-Assisted Phaseless Near-Field Transformation for Accelerating Near-Field Scanning”
-# 2.Usage
-1) Run 'Data_generation.py' in Data generation directory. Copy the generated data (Data.h5) to DCNN training directory and Numerical validations directory.
-2) Run 'DCNN_training.py' in DCNN training directory. Copy the trained DCNN (Trained_model.pth) to Numerical validations directory.
-3) Run 'Testing data #1', 'Testing data #2', and 'Patch antennas array.py' to get results.
+This repository contains the implementation code for the paper titled "Deep Learning-Assisted Phaseless Near-Field Transformation for Accelerating Near-Field Scanning."
+# 2.Usage Instructions
+1) Execute 'Data_generation.py' in the Data Generation directory. Transfer the generated data file (Data.h5) to both the DCNN Training and Numerical Validation directories.
+2) Run 'DCNN_training.py' in the DCNN Training directory. Move the trained model file (Trained_model.pth) to the Numerical Validation directory.
+3) Execute the following scripts to reproduce the results:
+'Testing_data_#1.py'
+'Testing_data_#2.py'
+'Patch_antennas_array.py'
 # 3.Maintainers
 This project is owned and managed by Dong-Hao Han and Xing-Chang Wei from Zhejiang University, China.
