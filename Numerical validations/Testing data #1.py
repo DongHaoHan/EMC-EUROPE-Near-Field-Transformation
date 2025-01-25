@@ -45,7 +45,7 @@ Test_loader = DataLoader(TensorDataset(Test_input_tensor), batch_size=1, shuffle
 Model.eval()
 with torch.no_grad():
     for i, (test_input,) in enumerate(Test_loader):
-        if i == 1:
+        if i == 0:
             # Create height labels for different scanning heights
             label_height_5mm = torch.tensor([0], dtype=torch.long).to(Device)  # 5mm
             label_height_7mm = torch.tensor([1], dtype=torch.long).to(Device)  # 7mm
