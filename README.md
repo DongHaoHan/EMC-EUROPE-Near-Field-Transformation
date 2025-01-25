@@ -7,5 +7,8 @@ This repository contains the implementation code for the paper titled "Deep Lear
 'Testing_data_#1.py'
 'Testing_data_#2.py'
 'Patch_antennas_array.py'
-# 3.Maintainers
+# 3.Notes
+1) Due to its substantial file size, Data.h5 cannot be uploaded in this repository.
+2) Trained_model.pth is available for direct download and can be utilized for testing without requiring additional training.
+# 4.Maintainers
 This project is owned and managed by Dong-Hao Han and Xing-Chang Wei from Zhejiang University, China.
