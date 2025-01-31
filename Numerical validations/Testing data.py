@@ -5,7 +5,7 @@ from Model import DCNN
 from torch.utils.data import DataLoader, TensorDataset
 import h5py
 
-# Function to calculate relative error between predicted and Reference values
+# Function to calculate relative error between predicted and reference values
 def relative(Pre, Tru):
     Pre = np.abs(Pre)
     Tru = np.abs(Tru)
