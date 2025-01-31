@@ -5,7 +5,7 @@ from Model import DCNN
 from torch.utils.data import DataLoader, TensorDataset
 import h5py
 
-# Function to calculate relative error between predicted and true values
+# Function to calculate relative error between predicted and Reference values
 def relative(Pre, Tru):
     Pre = np.abs(Pre)
     Tru = np.abs(Tru)
@@ -45,7 +45,7 @@ Test_loader = DataLoader(TensorDataset(Test_input_tensor), batch_size=1, shuffle
 Model.eval()
 with torch.no_grad():
     for i, (test_input,) in enumerate(Test_loader):
-        if i == 0:
+        if i == 0:  # Only process the third sample in the test set
             # Create height labels for different scanning heights
             label_height_5mm = torch.tensor([0], dtype=torch.long).to(Device)  # 5mm
             label_height_7mm = torch.tensor([1], dtype=torch.long).to(Device)  # 7mm
@@ -63,35 +63,35 @@ with torch.no_grad():
             Pre_Mag_3G_13mm = Model(test_input1, label_height_13mm).cpu().detach().numpy().squeeze()
             Pre_Mag_3G_15mm = Model(test_input1, label_height_15mm).cpu().detach().numpy().squeeze()
 
-            # Get Ground truth magnitudes for comparison
+            # Get reference magnitudes for comparison
             index = int(0.95 * Num_data + i)
-            True_Mag_3G_5mm = Magnitudes_['3G_5mm'][index, 0, :, :]
-            True_Mag_3G_7mm = Magnitudes_['3G_7mm'][index, 0, :, :]
-            True_Mag_3G_9mm = Magnitudes_['3G_9mm'][index, 0, :, :]
-            True_Mag_3G_11mm = Magnitudes_['3G_11mm'][index, 0, :, :]
-            True_Mag_3G_13mm = Magnitudes_['3G_13mm'][index, 0, :, :]
-            True_Mag_3G_15mm = Magnitudes_['3G_15mm'][index, 0, :, :]
+            Reference_Mag_3G_5mm = Magnitudes_['3G_5mm'][index, 0, :, :]
+            Reference_Mag_3G_7mm = Magnitudes_['3G_7mm'][index, 0, :, :]
+            Reference_Mag_3G_9mm = Magnitudes_['3G_9mm'][index, 0, :, :]
+            Reference_Mag_3G_11mm = Magnitudes_['3G_11mm'][index, 0, :, :]
+            Reference_Mag_3G_13mm = Magnitudes_['3G_13mm'][index, 0, :, :]
+            Reference_Mag_3G_15mm = Magnitudes_['3G_15mm'][index, 0, :, :]
 
             # Calculate and print relative errors
-            print("Relative error 3G 5mm:", relative(Pre_Mag_3G_5mm, True_Mag_3G_5mm))
-            print("Relative error 3G 7mm:", relative(Pre_Mag_3G_7mm, True_Mag_3G_7mm))
-            print("Relative error 3G 9mm:", relative(Pre_Mag_3G_9mm, True_Mag_3G_9mm))
-            print("Relative error 3G 11mm:", relative(Pre_Mag_3G_11mm, True_Mag_3G_11mm))
-            print("Relative error 3G 13mm:", relative(Pre_Mag_3G_13mm, True_Mag_3G_13mm))
-            print("Relative error 3G 15mm:", relative(Pre_Mag_3G_15mm, True_Mag_3G_15mm))
+            print("Relative error 3G 5mm:", relative(Pre_Mag_3G_5mm, Reference_Mag_3G_5mm))
+            print("Relative error 3G 7mm:", relative(Pre_Mag_3G_7mm, Reference_Mag_3G_7mm))
+            print("Relative error 3G 9mm:", relative(Pre_Mag_3G_9mm, Reference_Mag_3G_9mm))
+            print("Relative error 3G 11mm:", relative(Pre_Mag_3G_11mm, Reference_Mag_3G_11mm))
+            print("Relative error 3G 13mm:", relative(Pre_Mag_3G_13mm, Reference_Mag_3G_13mm))
+            print("Relative error 3G 15mm:", relative(Pre_Mag_3G_15mm, Reference_Mag_3G_15mm))
 
-            # Plot and save ground truth and predicted magnitudes
+            # Plot and save reference and predicted magnitudes
             heights = [5, 7, 9, 11, 13, 15]
-            true_mags = [True_Mag_3G_5mm, True_Mag_3G_7mm, True_Mag_3G_9mm, True_Mag_3G_11mm, True_Mag_3G_13mm, True_Mag_3G_15mm]
+            Reference_mags = [Reference_Mag_3G_5mm, Reference_Mag_3G_7mm, Reference_Mag_3G_9mm, Reference_Mag_3G_11mm, Reference_Mag_3G_13mm, Reference_Mag_3G_15mm]
             pred_mags = [Pre_Mag_3G_5mm, Pre_Mag_3G_7mm, Pre_Mag_3G_9mm, Pre_Mag_3G_11mm, Pre_Mag_3G_13mm, Pre_Mag_3G_15mm]
 
             plt.rcParams['font.family'] = 'Times New Roman'
             plt.rcParams['font.size'] = 25
 
-            for height, true_mag, pred_mag in zip(heights, true_mags, pred_mags):
-                # Save ground truth
+            for height, Reference_mag, pred_mag in zip(heights, Reference_mags, pred_mags):
+                # Plot reference
                 plt.figure()
-                plt.imshow(true_mag,
+                plt.imshow(Reference_mag,
                            extent=(-0.1 * 1e3, 0.1 * 1e3, -0.1 * 1e3, 0.1 * 1e3),
                            origin='upper',
                            aspect='auto',
@@ -100,12 +100,12 @@ with torch.no_grad():
                 plt.colorbar()
                 plt.xlabel('X Axis (mm)')
                 plt.ylabel('Y Axis (mm)')
-                plt.title(f"Ground truth Hx at {height} mm")
+                plt.title(f"Reference Hx at {height} mm")
                 plt.tight_layout()
-                plt.savefig(f'Ground truth Hx at {height} mm.png', dpi=300)
+                plt.savefig(f'Reference Hx at {height} mm.png', dpi=300)
                 plt.close()
 
-                # Save predicted
+                # Plot predicted magnitude
                 plt.figure()
                 plt.imshow(pred_mag,
                            extent=(-0.1 * 1e3, 0.1 * 1e3, -0.1 * 1e3, 0.1 * 1e3),
