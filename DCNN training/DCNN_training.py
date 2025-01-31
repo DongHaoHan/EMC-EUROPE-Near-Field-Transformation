@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import h5py
 from Model import DCNN
 import time
+
 # Load and Prepare Data
 with h5py.File('Data.h5', 'r') as file:
     Dataset_input_1 = np.array(file['Magnitude_3G_10mm'])
@@ -14,7 +15,6 @@ with h5py.File('Data.h5', 'r') as file:
     Dataset_output = np.array(file['Magnitude_pre'])
   
 # Split data into training, validation, and testing sets
-
 Num_data = Dataset_input_1.shape[0]
 Train_end = int(0.9 * Num_data)
 Val_end = int(0.95 * Num_data)
@@ -47,8 +47,8 @@ Train_loader = DataLoader(TensorDataset(Train_input_tensor_1, Train_input_tensor
                           batch_size=Batch_size, shuffle=True)
 Val_loader = DataLoader(TensorDataset(Val_input_tensor_1, Val_input_tensor_2, Val_output_tensor),
                         batch_size=Batch_size, shuffle=False)
-# Initialize Model, Loss, and Optimizer
 
+# Initialize Model, Loss, and Optimizer
 Device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 Model = DCNN().to(Device)
 Criterion = nn.MSELoss()
@@ -61,7 +61,6 @@ Val_losses = []
 start_time = time.time()
 
 # Training Loop
-
 for epoch in range(Num_epochs):
     Model.train()
     Running_train_loss = 0.0
@@ -103,6 +102,7 @@ for epoch in range(Num_epochs):
 end_time = time.time()
 total_time = end_time - start_time
 print(f"Total Training Time: {total_time:.2f} seconds")
+
 # Plot Training and Validation Loss
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['font.size'] = 22
@@ -118,7 +118,6 @@ plt.subplots_adjust(left=0.15, right=0.95, top=0.9, bottom=0.15)
 plt.savefig('Loss.png', dpi=600)
 
 #Save Trained Model
-
 model_save_path = 'Trained_model.pth'
 torch.save(Model.state_dict(), model_save_path)
 print(f"Trained model saved to {model_save_path}")
