@@ -3,9 +3,8 @@ This repository contains the implementation code for the paper titled "Deep Lear
 # 2.Usage Instructions
 1) Execute 'Data_generation.py' in the Data Generation directory. Transfer the generated data file (Data.h5) to both the DCNN Training and Numerical Validation directories.
 2) Run 'DCNN_training.py' in the DCNN Training directory. Move the trained model file (Trained_model.pth) to the Numerical Validation directory.
-3) Execute the following scripts to reproduce the results:
-'Testing_data_#1.py'
-'Testing_data_#2.py'
+3) Execute the following scripts to produce the results:
+'Testing_data.py'
 'Patch_antennas_array.py'
 # 3.Notes
 1) Due to its substantial file size, Data.h5 cannot be uploaded in this repository.
